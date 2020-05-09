@@ -3,7 +3,10 @@ const morgan = require('morgan');
 const helmet = require('helmet');
 const cors = require('cors');
 const app = express();
+const mongoose = require('mongoose');
 const middleware = require('./middleware');
+const logRoute = require('./api/logRoute');
+
 
 app.use(morgan('common'));
 app.use(helmet());
@@ -18,11 +21,19 @@ app.get('/', (req, res) => {
     });
 });
 
+
+app.use('/api/entry', logRoute);
+
 // For Not Found
 app.use(middleware.notFound);
 
 // General Error Routes
 app.use(middleware.errorHandler);
+
+
+mongoose.connect(process.env.MONGO_DB_URL,{
+    useNewUrlParser:true,
+});
 
 const port =    process.env.PORT || 5000;
 
