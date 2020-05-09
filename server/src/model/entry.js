@@ -33,7 +33,7 @@ const requiredNumber = {
         max: 180,
     },
     visitDate: { type: Date, default: Date.now, required:true },
-  }, {timestamps: true});
+  }, {timestamps: true, runValidators: true});
 
   const entry = mongoose.model('Entry', entrySchema);
 

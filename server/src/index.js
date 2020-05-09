@@ -13,7 +13,7 @@ app.use(helmet());
 app.use(cors({
     origin: 'http://localhost:3000',
 }));
-
+app.use(express.json());
 
 app.get('/', (req, res) => {
     res.json({
@@ -33,6 +33,7 @@ app.use(middleware.errorHandler);
 
 mongoose.connect(process.env.MONGO_DB_URL,{
     useNewUrlParser:true,
+    useUnifiedTopology: true,
 });
 
 const port =    process.env.PORT || 5000;
