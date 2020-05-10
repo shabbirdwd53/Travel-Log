@@ -1,40 +1,43 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 const requiredString = {
-    type: String,
-    required:true,
+  type: String,
+  required: true,
 };
 
 const requiredNumber = {
-    type: Number,
-    required:true,
+  type: Number,
+  required: true,
 };
 
-  var entrySchema = new Schema({
+var entrySchema = new Schema(
+  {
     title: requiredString,
     description: String,
     comments: String,
     rating: {
-        type: Number,
-        min: [1, 'Minimum 1'],
-        max: [10,'Maximum 10'],
-        default: 0,
+      type: Number,
+      min: [0, "Minimum 1"],
+      max: [10, "Maximum 10"],
+      default: 0,
     },
     image: String,
     latitute: {
-        ...requiredNumber,
-    min: -90,
-    max: 90,
-},
-    longitude: {
-        ...requiredNumber,
-        min: -180,
-        max: 180,
+      ...requiredNumber,
+      min: -90,
+      max: 90,
     },
-    visitDate: { type: Date, default: Date.now, required:true },
-  }, {timestamps: true, runValidators: true});
+    longitude: {
+      ...requiredNumber,
+      min: -180,
+      max: 180,
+    },
+    visitDate: { type: String, default: Date.now, required: true },
+  },
+  { timestamps: true, runValidators: true }
+);
 
-  const entry = mongoose.model('Entry', entrySchema);
+const entry = mongoose.model("Entry", entrySchema);
 
-  module.exports = entry;
+module.exports = entry;

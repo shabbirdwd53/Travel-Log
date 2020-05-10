@@ -8,16 +8,35 @@ body {
   overflow: hidden;
 }
 
+.error {
+  color: #f05305;
+}
 .marker {
   stroke: #f8c102;
   translate: translate(-50%, -100%);
 }
 
 .popup {
-  max-width: 250px;
+  width: 40vw;
+  padding: 1rem;
 }
 
 .marker {
   stroke: #d60611;
   translate: translate(-50%, -100%);
+}
+
+.entryForm label .entryForm input .entryForm textarea .entryForm button {
+  margin-right: 0.5rem 0;
+  display: block;
+  width: 100%;
+  font-size: 2rem;
+}
+
+.popup img {
+  width: auto;
+  height: 200px;
+  text-align: center;
+  margin: 0 auto;
+  display: block;
 }

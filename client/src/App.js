@@ -2,6 +2,7 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
 import { listEntries } from "./Api";
+import EntryForm from "./EntryForm";
 
 function App() {
   const [showPopup, setShowPopup] = useState({});
@@ -15,12 +16,14 @@ function App() {
     zoom: 3,
   });
 
+  const getEntries = async () => {
+    const entries = await listEntries();
+    console.log(entries);
+    setEntries(entries);
+  };
+
   useEffect(() => {
-    (async () => {
-      const entries = await listEntries();
-      console.log(entries);
-      setEntries(entries);
-    })();
+    getEntries();
   }, []);
 
   const showAddMarkerPopup = (e) => {
@@ -92,6 +95,7 @@ function App() {
                 <small>
                   <i>{new Date(entry.visitDate).toLocaleString()}</i>
                 </small>
+                {entry.image && <img src={entry.image} alt={entry.title}></img>}
               </div>
             </Popup>
           ) : null}
@@ -99,12 +103,8 @@ function App() {
       ))}
 
       {addEntry ? (
-        <>
-          <Marker
-            key={addEntry._id}
-            latitude={addEntry.latitude}
-            longitude={addEntry.longitude}
-          >
+        <React.Fragment key={addEntry._id}>
+          <Marker latitude={addEntry.latitude} longitude={addEntry.longitude}>
             <div className="addmarker">
               <svg
                 className="addmarker"
@@ -136,10 +136,16 @@ function App() {
             dynamicPosition={true}
           >
             <div className="popup">
-              <h3>Add your New Entry here!</h3>
+              <EntryForm
+                onClose={() => {
+                  setAddEntry(null);
+                  getEntries();
+                }}
+                location={addEntry}
+              ></EntryForm>
             </div>
           </Popup>
-        </>
+        </React.Fragment>
       ) : null}
     </ReactMapGL>
   );
