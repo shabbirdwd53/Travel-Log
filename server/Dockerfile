@@ -1,10 +1,10 @@
 FROM node:14
-ENV MONGO_DB_URL mongodb+srv://dcbadmin:<password>@dcbcluster-hdxur.mongodb.net/test?retryWrites=true&w=majority
-ENV PORT 1337
+ENV MONGO_DB_URL <Your MongoDb Connection URL>
+ENV PORT 5000
 ENV NODE_ENV production
 WORKDIR /app
 COPY package.json /app
 RUN npm install
 COPY . /app
-CMD node index.js
+CMD node src/index.js
 EXPOSE ${PORT}
